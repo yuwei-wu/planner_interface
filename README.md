@@ -114,9 +114,7 @@ colcon build
 <summary><b>1. Standard (Monomial) Polynomials</b></summary>
 
 **General Form:**  
-$$
-p(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_n t^n
-$$
+$$p(t) = a_0 + a_1 t + a_2 t^2 + \dots + a_n t^n$$
 
 - **Variables:** $t \in \mathbb{R}$, typically representing time or spatial variable.  
 - **Domain:** Usually any real interval; no restriction.  
@@ -131,18 +129,12 @@ $$
 <summary><b>2. Chebyshev Polynomials</b></summary>
 
 **General Form:**  
-$$
-p(t) = \sum_{k=0}^n c_k T_k(t)
-$$
+$$p(t) = \sum_{k=0}^n c_k T_k(t)$$
 
 Where the Chebyshev polynomials $T_k(t)$ are defined by:  
-$$
-T_0(t) = 1, \quad T_1(t) = t, \quad T_{k+1}(t) = 2 t T_k(t) - T_{k-1}(t)
-$$  
+$$T_0(t) = 1, \quad T_1(t) = t, \quad T_{k+1}(t) = 2 t T_k(t) - T_{k-1}(t)$$  
 or equivalently:  
-$$
-T_k(t) = \cos(k \arccos t)
-$$
+$$T_k(t) = \cos(k \arccos t)$$
 
 - **Variables:** $t \in [-1, 1]$  
 - **Domain:** Defined specifically on the interval $[-1,1]$. Inputs outside require domain scaling.  
@@ -158,14 +150,10 @@ $$
 <summary><b>3. Bernstein Polynomials (Bezier Basis)</b></summary>
 
 **General Form:**  
-$$
-p(t) = \sum_{k=0}^n b_k B_{k,n}(t)
-$$
+$$p(t) = \sum_{k=0}^n b_k B_{k,n}(t)$$
 
 Where the Bernstein basis polynomials are:  
-$$
-B_{k,n}(t) = \binom{n}{k} t^k (1 - t)^{n-k}
-$$
+$$B_{k,n}(t) = \binom{n}{k} t^k (1 - t)^{n-k}$$
 
 - **Variables:** $t \in [0, 1]$  
 - **Domain:** Defined on $[0,1]$, which fits well with normalized curve parameterization.  
@@ -180,14 +168,10 @@ $$
 <summary><b>4. Legendre Polynomials</b></summary>
 
 **General Form:**  
-$$
-p(t) = \sum_{k=0}^n l_k P_k(t)
-$$
+$$p(t) = \sum_{k=0}^n l_k P_k(t)$$
 
 Where Legendre polynomials $P_k(t)$ satisfy the recurrence:  
-$$
-(k+1) P_{k+1}(t) = (2k+1) t P_k(t) - k P_{k-1}(t)
-$$
+$$(k+1) P_{k+1}(t) = (2k+1) t P_k(t) - k P_{k-1}(t)$$
 
 - **Variables:** $t \in [-1, 1]$  
 - **Domain:** Orthogonal on $[-1,1]$ with uniform weight.  
@@ -201,14 +185,10 @@ $$
 <summary><b>5. Hermite Polynomials</b></summary>
 
 **General Form:**  
-$$
-p(t) = \sum_{k=0}^n h_k H_k(t)
-$$
+$$p(t) = \sum_{k=0}^n h_k H_k(t)$$
 
 Where Hermite polynomials $H_k(t)$ can be defined via Rodrigues’ formula:  
-$$
-H_k(t) = (-1)^k e^{t^2} \frac{d^k}{dt^k} e^{-t^2}
-$$
+$$H_k(t) = (-1)^k e^{t^2} \frac{d^k}{dt^k} e^{-t^2}$$
 
 - **Variables:** $t \in \mathbb{R}$ (all real numbers)  
 - **Domain:** Entire real line.  
@@ -222,14 +202,10 @@ $$
 <summary><b>6. Laguerre Polynomials</b></summary>
 
 **General Form:**  
-$$
-p(t) = \sum_{k=0}^n g_k L_k(t)
-$$
+$$p(t) = \sum_{k=0}^n g_k L_k(t)$$
 
 Where Laguerre polynomials satisfy:  
-$$
-L_k(t) = \frac{e^t}{k!} \frac{d^k}{dt^k} \left(t^k e^{-t}\right)
-$$
+$$L_k(t) = \frac{e^t}{k!} \frac{d^k}{dt^k} \left(t^k e^{-t}\right)$$
 
 - **Variables:** $t \in [0, \infty)$  
 - **Domain:** Semi-infinite interval $[0, \infty)$.  
@@ -243,7 +219,7 @@ $$
 
 ## Acknowledges
 
-- Thanks to the OpenAI GPT model for assistance in developing the code and documentation.
+- Thanks to the [OpenAI GPT](https://openai.com/) for assistance in developing the code and documentation.
 - Reference: 
    -  https://github.com/ethz-asl/mav_comm
    -  https://github.com/KumarRobotics/kr_mav_control/tree/poly/trackers/kr_tracker_msgs
