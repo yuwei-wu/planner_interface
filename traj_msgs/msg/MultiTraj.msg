@@ -2,4 +2,4 @@
 
 int32 drone_id_from
 
-SingleTraj[] trajectories
+SingleTraj[] traj

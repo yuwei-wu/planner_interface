@@ -1,9 +1,8 @@
 # planner_interface
 
-`planner_interface` is a modular C++ and ROS-compatible package repository providing polynomial and B-spline trajectory representations, along with ROS message definitions for trajectory planning. It consists of three main components:
+`planner_interface` is a modular ROS package library providing polynomial and B-spline trajectory representations, along with ROS message definitions for trajectory planning. 
 
-- **poly_lib**: Standalone C++ library for polynomial and B-spline computations.
-- **poly_ros2**: ROS2 wrapper node and interface for polynomial computations using `poly_lib`.
+- **poly_lib**: ROS2 library for polynomial and B-spline computations.
 - **traj_msgs**: Custom ROS message definitions to describe trajectories and splines.
 
 ---
@@ -11,32 +10,31 @@
 ## Repository Structure
 
 ```
-planner_interface/
-├── poly_lib/          # Core polynomial and B-spline library (standalone)
-│   ├── include/poly_lib/
-│   │   ├── poly_1d.hpp
-│   │   ├── poly_nd.hpp
-│   │   └── bspline.hpp
-│   ├── src/
-│   │   ├── exa_poly1d.cpp
-│   │   └── exp_spline.cpp
-│   └── CMakeLists.txt
-├── poly_ros2/         # ROS2 node wrapping poly\_lib functionality
-│   ├── src/
-│   │   └── poly_node.cpp
-│   ├── CMakeLists.txt
-│   └── package.xml
-├── traj_msgs/         # ROS message definitions for trajectories
-│   ├── msg/
-│   │   ├── BdDervi.msg
-│   │   ├── Bspline.msg
-│   │   ├── Discrete.msg
-│   │   ├── MultiTraj.msg
-│   │   ├── Polynomial.msg
-│   │   └── SingleTraj.msg
-│   ├── CMakeLists.txt
-│   └── package.xml
+├── poly_lib
+│   ├── CMakeLists.txt
+│   ├── include
+│   │   └── poly_lib
+│   │       ├── bspline.hpp
+│   │       ├── poly_1d.hpp
+│   │       ├── poly_nd.hpp
+│   │       └── traj_data.hpp
+│   ├── package.xml
+│   └── src
+│       ├── exa_poly1d.cpp
+│       ├── exp_spline.cpp
+│       └── poly_node.cpp
 ├── README.md
+└── traj_msgs
+    ├── CMakeLists.txt
+    ├── msg
+    │   ├── BdDervi.msg
+    │   ├── Bspline.msg
+    │   ├── Discrete.msg
+    │   ├── MultiTraj.msg
+    │   ├── PiecewisePoly.msg
+    │   ├── Polynomial.msg
+    │   └── SingleTraj.msg
+    └── package.xml
 
 ````
 
@@ -49,10 +47,6 @@ planner_interface/
 - Multi-dimensional polynomial curves (`PolyND`)
 - B-spline support (Bezier and Bernstein basis), Conversion from B-spline to polynomial form
 
-### poly_ros2
-- ROS2 node exposing polynomial evaluation and spline functionality
-- Integration with ROS2 build system and message passing
-
 ### traj_msgs
 - Custom message types describing various polynomial and spline trajectories
 - Designed for uniform and non-uniform B-splines, multi-segment trajectories, and discrete waypoint trajectories
@@ -64,7 +58,7 @@ planner_interface/
 - C++17 compatible compiler
 - CMake 3.5+
 - [Eigen3](https://eigen.tuxfamily.org/)
-- ROS2 (for `poly_ros2` and `traj_msgs`)
+- ROS2
 
 ---
 
@@ -73,26 +67,8 @@ planner_interface/
 Build the entire workspace using `colcon` or `ament`:
 
 ```bash
-colcon build --packages-select poly_lib poly_ros2 traj_msgs
+colcon build 
 ````
-
-Or, build individual packages:
-
-```bash
-# Build standalone poly_lib (for non-ROS usage)
-cd poly_lib
-mkdir build && cd build
-cmake ..
-make
-sudo make install  # optional
-
-# Build poly_ros2 and traj_msgs as ROS2 packages
-cd ../poly_ros2
-colcon build
-
-cd ../traj_msgs
-colcon build
-```
 
 ---
 

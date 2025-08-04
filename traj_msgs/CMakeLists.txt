@@ -16,6 +16,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Bspline.msg"
   "msg/MultiTraj.msg"
   "msg/SingleTraj.msg"
+  "msg/PiecewisePoly.msg"
   DEPENDENCIES std_msgs geometry_msgs builtin_interfaces
 )
 

@@ -1,49 +1,45 @@
 cmake_minimum_required(VERSION 3.5)
 project(poly_lib LANGUAGES CXX)
 
+# Default to C++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Include Eigen dependency (required for your code)
+# Find ROS2 packages
+find_package(ament_cmake REQUIRED)
 find_package(Eigen3 REQUIRED)
 
-# Include directories
-include_directories(
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
-  ${EIGEN3_INCLUDE_DIR}
-)
-
-# Source files
+# Library Sources
 set(SOURCES
   src/exa_poly1d.cpp
   src/exp_spline.cpp
 )
 
-# Create static library
+# Create library
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC Eigen3::Eigen)
-
+# Include directories
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
 
-# Install headers
-install(DIRECTORY include/ DESTINATION include)
+target_link_libraries(${PROJECT_NAME} PUBLIC Eigen3::Eigen)
 
-# Install library
+# Install targets
 install(TARGETS ${PROJECT_NAME}
-  EXPORT ${PROJECT_NAME}Targets
+  EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
 )
 
-# Export config files if you want downstream packages to find poly_lib
-install(EXPORT ${PROJECT_NAME}Targets
-  FILE ${PROJECT_NAME}Targets.cmake
-  NAMESPACE ${PROJECT_NAME}::
-  DESTINATION lib/cmake/${PROJECT_NAME}
-)
+# Install headers
+install(DIRECTORY include/ DESTINATION include)
+
+# Export CMake config for downstream packages
+ament_export_targets(export_${PROJECT_NAME})
+ament_export_include_directories(include)
+ament_export_libraries(${PROJECT_NAME})
+
+ament_package()

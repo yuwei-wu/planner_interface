@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>poly_lib</name>
+  <version>0.1.0</version>
+  <description>Polynomial and Spline Library for ROS2</description>
+  <maintainer email="yuweiwu@seas.upenn.edu">Yuwei Wu</maintainer>
+
+  <license>BSD-3-Clause</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <build_depend>eigen3_cmake_module</build_depend>
+  <build_export_depend>eigen3_cmake_module</build_export_depend>
+  <exec_depend>eigen3_cmake_module</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
