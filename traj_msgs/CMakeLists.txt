@@ -13,7 +13,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/BdDervi.msg"
   "msg/Discrete.msg"
   "msg/Polynomial.msg"
-  "msg/Bspline.msg"
+  "msg/Spline.msg"
   "msg/MultiTraj.msg"
   "msg/SingleTraj.msg"
   "msg/PiecewisePoly.msg"

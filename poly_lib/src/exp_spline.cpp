@@ -1,5 +1,4 @@
 #include <iostream>
-#include <Eigen/Dense>
 #include "poly_lib/bspline.hpp"
 
 using namespace poly_lib;

@@ -2,7 +2,7 @@
 #pragma once
 
 #include <vector>
-#include <Eigen/Dense>
+#include <Eigen/Eigen>
 #include <stdexcept>
 #include "poly_nd.hpp"
 

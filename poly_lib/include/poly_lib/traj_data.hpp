@@ -10,12 +10,13 @@
 
 namespace traj_opt
 {
+
 enum PolyType
 {
   STANDARD,  // polynomials
   BEZIER,    // B-spline
   BERNSTEIN, // bernstein 
-  BOUNDARY   // boundary conditions
+  BOUNDARY   // boundary conditions  also quintic polynomial
 };
 
 /**
@@ -379,6 +380,24 @@ class DiscreteStates
     return phi;
   }
 };
+
+
+// traj data
+struct TrajData
+{
+  /* info of generated traj */
+  double traj_dur_ = 0, traj_yaw_dur_ = 0;
+  rclcpp::Time start_time_;
+  int dim_;
+
+  traj_opt::Trajectory3D traj_3d_;
+  traj_opt::Trajectory1D traj_yaw_;
+  traj_opt::DiscreteStates traj_discrete_;
+};
+
+
+typedef std::vector<TrajData> MultiTrajData;
+
 
 }  // namespace traj_opt
 
