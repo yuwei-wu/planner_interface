@@ -81,10 +81,10 @@ colcon build
 | Standard (Monomial) | $t^k$                                         | Any real interval | No          |
 | Chebyshev           | $T_k(t) = \cos(k \arccos t)$                  | $[-1,1]$          | Yes         |
 | Bernstein (Bezier)  | $B_{k,n}(t) = \binom{n}{k} t^k (1 - t)^{n-k}$ | $[0,1]$           | No          |
+| B-spline            | $N_{i,p}(t)$                                  | $[t_0, t_m]$      | No          |
 | Legendre            | $P_k(t)$ (recurrence)                         | $[-1,1]$          | Yes         |
 | Hermite             | $H_k(t)$ (Rodrigues’ formula)                 | $\mathbb{R}$      | Yes         |
 | Laguerre            | $L_k(t)$ (Rodrigues’ formula)                 | $[0, \infty)$     | Yes         |
-
 
 <details>
 <summary><b>1. Standard (Monomial) Polynomials</b></summary>
@@ -141,7 +141,32 @@ $$B_{k,n}(t) = \binom{n}{k} t^k (1 - t)^{n-k}$$
 </details>
 
 <details>
-<summary><b>4. Legendre Polynomials</b></summary>
+<summary><b>4. B-spline </b></summary>
+
+**General Form:**
+$p(t) = \sum_{i=0}^m c_i N_{i,n}(t)$
+
+Where the B-spline basis functions $N_{i,n}(t)$ are defined recursively over a knot vector $\{t_0, t_1, \ldots, t_{m+n+1}\}$:
+
+- Zero-degree basis:
+$N_{i,0}(t) = \text{1 if } t_i \leq t < t_{i+1}, \text{ else } 0$
+
+
+- Recursive definition:
+$N_{i,n}(t) = \frac{t - t_i}{t_{i+n} - t_i} N_{i,n-1}(t) + \frac{t_{i+n+1} - t}{t_{i+n+1} - t_{i+1}} N_{i+1,n-1}(t)$
+
+* **Variables:** $t \in [t_n, t_{m+1}]$ (domain determined by knot vector)
+* **Description:**
+  B-splines generalize Bezier curves by piecing together polynomial segments with continuity and local control, where each basis function is nonzero only on a limited interval defined by knots.
+* **Properties:**
+  * Local support: each basis function affects only a portion of the curve, allowing local shape modification.
+  * Partition of unity: basis functions sum to 1 everywhere on the domain.
+  * Flexibility: knot multiplicities control continuity and shape.
+
+</details>
+
+<details>
+<summary><b>5. Legendre Polynomials</b></summary>
 
 **General Form:**  
 $$p(t) = \sum_{k=0}^n l_k P_k(t)$$
@@ -158,7 +183,7 @@ $$(k+1) P_{k+1}(t) = (2k+1) t P_k(t) - k P_{k-1}(t)$$
 </details>
 
 <details>
-<summary><b>5. Hermite Polynomials</b></summary>
+<summary><b>6. Hermite Polynomials</b></summary>
 
 **General Form:**  
 $$p(t) = \sum_{k=0}^n h_k H_k(t)$$
