@@ -1,22 +1,28 @@
 # planner_interface
+[![Linux platform](https://img.shields.io/badge/platform-linux--64-orange.svg)](https://releases.ubuntu.com/22.04/)
+![ROS2](https://img.shields.io/badge/ROS2-Humble-blueviolet)
+![Eigen](https://img.shields.io/badge/Eigen-3.x-lightgrey)
+![CMake Version](https://img.shields.io/badge/CMake-3.5%2B-blue)
 
-`planner_interface` is a modular ROS package library providing polynomial and B-spline trajectory representations, along with ROS message definitions for trajectory planning. 
+`planner_interface` is a modular library providing polynomial and B-spline trajectory representations, along with ROS message definitions for trajectory planning. 
 
-- **poly_lib**: ROS2 library for polynomial and B-spline computations.
+- **poly_lib**: ROS2 library for polynomial and B-spline computation and conversion.
 - **traj_msgs**: Custom ROS message definitions to describe trajectories and splines.
 
 ---
 
-## Repository Structure
+## 1. Repository Structure
 
 ```
 ├── poly_lib
 │   ├── CMakeLists.txt
 │   ├── include
 │   │   └── poly_lib
+│   │       ├── basis_utils.hpp
 │   │       ├── bspline.hpp
 │   │       ├── poly_1d.hpp
 │   │       ├── poly_nd.hpp
+│   │       ├── ros_utils.hpp
 │   │       └── traj_data.hpp
 │   ├── package.xml
 │   └── src
@@ -28,41 +34,86 @@
     ├── CMakeLists.txt
     ├── msg
     │   ├── BdDervi.msg
-    │   ├── Bspline.msg
     │   ├── Discrete.msg
     │   ├── MultiTraj.msg
     │   ├── PiecewisePoly.msg
     │   ├── Polynomial.msg
-    │   └── SingleTraj.msg
+    │   ├── SingleTraj.msg
+    │   └── Spline.msg
     └── package.xml
 
 ````
 
 ---
 
-## Features
-
-### poly_lib
-- Polynomial evaluation with multiple basis types: Standard, Chebyshev, Legendre, Hermite, Laguerre
-- Multi-dimensional polynomial curves (`PolyND`)
-- B-spline support (Bezier and Bernstein basis), Conversion from B-spline to polynomial form
+## 2. Features
 
 ### traj_msgs
-- Custom message types describing various polynomial and spline trajectories
-- Designed for uniform and non-uniform B-splines, multi-segment trajectories, and discrete waypoint trajectories
 
----
+#### check the support trajectory type in SingleTraj.msg
 
-## Dependencies
+```
+# === Identification ===
+int32 drone_id          # Drone Unique ID
+int32 traj_id           # Trajectory Unique ID
 
-- C++17 compatible compiler
-- CMake 3.5+
-- [Eigen3](https://eigen.tuxfamily.org/)
-- ROS2
+# === Timing ===
+builtin_interfaces/Time start_time
+float64 duration
 
----
+# === Trajectory Type Enum ===
+int8 TRAJ_POLY = 0      # standard polynomial
+int8 TRAJ_SPLINE = 1    # Bspline or Bernstein
+int8 TRAJ_DISCRETE = 2  # discrete method
+int8 TRAJ_BD_DERIV = 3  # hermite quintic
 
-## Build Instructions
+int8 traj_type          # Active trajectory type
+
+# === Union: Only 1 Active Trajectory ===
+PiecewisePoly polytraj
+Spline        splinetraj
+Discrete      discretetraj
+BdDervi       bddervitraj
+```
+
+### poly_lib
+
+`poly_lib` provides data structures and utilities for polynomial-based trajectory representation and conversion.
+
+
+* **traj_data.hpp**
+  Defines `TrajData`, a struct that supports querying **position**, **velocity**, and **acceleration** for:
+
+
+```cpp
+STANDARD,  // Standard Polynomials
+BEZIER,    // Bézier (B-spline form)
+BERNSTEIN, // Bernstein Polynomials
+BOUNDARY   // Boundary Conditions (e.g., Quintic Polynomials)
+```
+  ```cpp
+  struct TrajData
+  {
+    double traj_dur_ = 0, traj_yaw_dur_ = 0;
+    rclcpp::Time start_time_;
+    int dim_;
+    traj_opt::Trajectory3D traj_3d_;
+    traj_opt::Trajectory1D traj_yaw_;
+    traj_opt::DiscreteStates traj_discrete_;
+  };
+  ```
+
+* **ros\_utils.hpp**
+  Provides `SingleTraj2TrajData` to convert `SingleTraj.msg` into `TrajData`.
+
+* **basis\_utils.hpp**
+  Utility functions to convert **Chebyshev**, **Legendre**, and **Laguerre** polynomials into **Standard Polynomial** form.
+
+* **PolyND**
+  Utilities for handling single and multi-dimensional polynomial curves.
+
+
+## 3. Build Instructions
 
 Build the entire workspace using `colcon` or `ament`:
 
@@ -72,9 +123,9 @@ colcon build
 
 ---
 
-## Resources 
+## 4. Resources 
 
-### 1. Polynomial Bases 
+### 4.1 Polynomial Bases 
 
 | Polynomial Type     | Basis Functions                               | Domain            | Orthogonal? |
 | ------------------- | --------------------------------------------- | ----------------- | ----------- |
