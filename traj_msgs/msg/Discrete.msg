@@ -1,13 +1,13 @@
 # Full Discrete State-Control Trajectory for Quadrotor Dynamics
 
-float64[] time_stamps  # Discrete time points
+float64 dt  # Discrete sampling time
 
 # === States ===
 geometry_msgs/Point[] pos_pts      # x, y, z positions
-geometry_msgs/Point[] vels     # vx, vy, vz velocities
-geometry_msgs/Point[] accelerations  # ax, ay, az accelerations
-geometry_msgs/Quaternion[] orientations  # Orientation quaternions (optional but preferred for 3D rotations)
-geometry_msgs/Point[] angular_velocities  # Body angular rates (roll_rate, pitch_rate, yaw_rate)
+geometry_msgs/Point[] vel_pts     # vx, vy, vz velocities
+geometry_msgs/Point[] acc_pts  # ax, ay, az accelerations
+geometry_msgs/Quaternion[] ori_pts  # Orientation quaternions (optional but preferred for 3D rotations)
+geometry_msgs/Point[] angular_vel_pts  # Body angular rates (roll_rate, pitch_rate, yaw_rate)
 
 # === Controls ===
 float64[] collective_thrusts           # Collective thrust per time step
